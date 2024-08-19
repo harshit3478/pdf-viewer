@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { S3 } from 'aws-sdk';
 
 const s3 = new S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION
+  accessKeyId: process.env.HARSHIT_AWS_ACCESS_KEY,
+  secretAccessKey: process.env.HARSHIT_AWS_SECRET_ACCESS_KEY,
+  region: process.env.HARSHIT_AWS_REGION
 });
 
 async function uploadFilesToAws(files: File[]) {
@@ -16,7 +16,7 @@ async function uploadFilesToAws(files: File[]) {
     const buffer = Buffer.from(arrayBuffer);
 
     const params = {
-      Bucket: process.env.AWS_BUCKET_NAME || 'mypdfreaderbucket',
+      Bucket: process.env.HARSHIT_AWS_BUCKET_NAME || 'mypdfreaderbucket',
       Key: fileName,
       Body: buffer,
       ContentType: file.type,
