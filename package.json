@@ -1,0 +1,40 @@
+{
+  "name": "maggu-pdf-bookmarker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1677.0",
+    "formidable": "^3.5.1",
+    "formidable-serverless": "^1.1.1",
+    "fs": "^0.0.1-security",
+    "lodash.debounce": "^4.0.8",
+    "lodash.throttle": "^4.1.1",
+    "next": "14.2.5",
+    "path": "^0.12.7",
+    "pdfjs-dist": "^4.5.136",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.52.2",
+    "react-icons": "^5.2.1",
+    "react-pdf": "^9.1.0",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/lodash.throttle": "^4.1.9",
+    "@types/node": "^20.16.1",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "daisyui": "^4.12.10",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
