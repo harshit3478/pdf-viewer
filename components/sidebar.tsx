@@ -56,6 +56,7 @@ export default function Sidebar({
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
             />
+            <button className="btn btn-link bg-red z-50 absolute top-5 right-5" onClick={() => router.push("/")}  >Home</button>
           </div>
           <div className="drawer-side">
             <label

@@ -12,7 +12,7 @@ import Upload from "@/components/upload";
 export default function Home() {
   const router = useRouter();
   const books = useBookStore((state: any) => state.books);
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(true);
   console.log("isDrawerOpen", isDrawerOpen);
   function handleClick(book: any) {
     console.log("book", book);
@@ -27,7 +27,7 @@ export default function Home() {
             <div>
         <div className="drawer">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content flex w-screen h-screen">
+          <div className="drawer-content flex flex-col justify-center w-screen h-screen">
             <div className="">
               <label
                 htmlFor="my-drawer"
@@ -41,6 +41,7 @@ export default function Home() {
                 )}
               </label>
             </div>
+            <p className="text text-wrap font-[Urbanist] font-semibold text-center text-xl">Welcome to pdf reader; It automatically saves the last page you visited and also helps you bookmark the pages  </p>
             <Upload />
           </div>
           <div className="drawer-side">
