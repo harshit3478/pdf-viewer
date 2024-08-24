@@ -34,6 +34,8 @@ export default function PDFJS({ book, isSidebar = true, page , setCurrentPage , 
       setCurrentPage(numPages);
     }
   }
+  console.log("currentPage ", currentPage);
+  console.log("numPages ", numPages);
 
   // const handlePageRenderSuccess = useCallback(() => {
   //   setLoading(false);
@@ -78,7 +80,7 @@ export default function PDFJS({ book, isSidebar = true, page , setCurrentPage , 
 
   function IncrementPage() {
     if(currentPage === numPages) return;
-  
+
     setCurrentPage(currentPage + 1);
   }
   function DecrementPage() {
@@ -105,7 +107,7 @@ export default function PDFJS({ book, isSidebar = true, page , setCurrentPage , 
         >
           <Page
             key={`page_${currentPage}`}
-            className="pdf-page relative mx-20 -z-10 "
+            className="pdf-page relative mx-20 z-0 "
             pageNumber={currentPage}
             // noData={
             //   <div className="modal modal-open flex items-center justify-center ">
@@ -124,9 +126,9 @@ export default function PDFJS({ book, isSidebar = true, page , setCurrentPage , 
             onRenderSuccess={() => setLoading(false)}
           >
           <button
-            className="btn btn-outline h-full  rounded-lg absolute top-0 -left-8 cursor-pointer"
+            className="btn btn-outline h-full  rounded-lg absolute top-0 -left-8 cursor-pointer "
             onClick={DecrementPage}
-            disabled={currentPage === 1}
+            disabled={currentPage <= 1}
           >
             <FaChevronLeft />
           </button>
