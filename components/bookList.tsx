@@ -75,7 +75,7 @@ export default function BookList({ bookTitle }: any) {
   }
   return (
     <>
-      <ul className="menu bg-base-200 text-base-content min-h-full w-80 py-4">
+      <ul className="menu bg-base-200 text-base-content min-h-full py-4">
         {/* Sidebar content here */}
         {books.map((book: any, index: number) => (
           <li key={index} className="menu-title cursor-pointer">
@@ -84,9 +84,11 @@ export default function BookList({ bookTitle }: any) {
                 onClick={() => handleClick(book)}
                 className=" hover:bg-slate-800 p-2 px-4 rounded-md "
               >
-                <p>
-                  {index + 1}. {book.title}
-                </p>
+
+                <p className="text-wrap">
+                    {/* // first 15 characters of the title */}
+                   {index+1}.  {book.title.length > 40 ? `${book.title.slice(0, 25)}...` : book.title}
+                    </p>
                 <p className="text-slate-400 text-start">
                   Last page visited: {book.lastPageVisited}
                 </p>

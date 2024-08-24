@@ -53,7 +53,8 @@ export async function POST(req: NextRequest) {
     if (!fileName) {
       return NextResponse.json({ success: false, message: 'No file name provided' }, { status: 400 });
     }
-    fileName = fileName.replace(/\+/g, ' ');
+    // Decode the file name
+    fileName = decodeURIComponent(fileName);
     // Check if the file exists
     const fileExists = await checkIfFileExists(fileName);
     if (!fileExists) {
