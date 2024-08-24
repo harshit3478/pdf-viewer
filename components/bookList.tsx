@@ -77,7 +77,7 @@ export default function BookList({ bookTitle }: any) {
     <>
       <ul className="menu bg-base-200 text-base-content min-h-full w-80 py-4">
         {/* Sidebar content here */}
-        {books.reverse().map((book: any, index: number) => (
+        {books.map((book: any, index: number) => (
           <li key={index} className="menu-title cursor-pointer">
             <div className=" bg-slate-900 text-slate-50 p-5 w-full flex items-center gap-2 justify-between ">
               <div

@@ -34,7 +34,9 @@ export const useBookStore = create(
             addBook: (book: Book) => set((state) => {
                 const bookExists = state.books.some(b => b.title === book.title);
                 if (!bookExists) {
-                    return { books: [...state.books, book] };
+                    // console.log("book added ", book);
+                    // add the book and reverse the order
+                    return { books: [book, ...state.books] };
                 }
                 return state;
             }),
@@ -42,12 +44,13 @@ export const useBookStore = create(
                 books: state.books.filter((b: Book) => b.title !== book.title)
             })),
             updateBook: (payload: Payload) => set((state) => {
-                const updatedBooks = state.books.map(book => 
-                    book.title === payload.title 
-                        ? { ...book, lastPageVisited: payload.lastPageVisited }
-                        : book
-                );
-                return { books: updatedBooks };
+                // find the book and slice it and add the updated book in front
+
+                const bookIndex = state.books.findIndex((book: Book) => book.title === payload.title);
+                const book = state.books[bookIndex];
+                const updatedBook = { ...book, lastPageVisited: payload.lastPageVisited };
+                state.books.splice(bookIndex, 1);
+                return { books: [updatedBook, ...state.books] };
             })
         }),
         {
