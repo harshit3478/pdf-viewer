@@ -1,11 +1,11 @@
 "use client";
-import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { useBookStore } from "@/store/book";
+import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-import Sidebar from "@/components/sidebar";
-import { url } from "inspector";
-import { setuid } from "process";
+import { useBookStore } from "@/store/book";
+import Drawer from "@/components/drawer";
+import PDFJS from "@/components/pdfJS";
 
 type Book = {
   title: string;
@@ -19,7 +19,8 @@ export default function Page() {
   const {updateBook } = useBookStore();
   const books = useBookStore((state: any) => state.books);
   const book = books.find((book:Book) => book.title === decodeURIComponent(title.toString()));
-  // when the book is not found, redirect to the home page
+  const router = useRouter()
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   // change the url when page no changes 
   useEffect(() => {
     if (currentPage !== Number(page)) {
@@ -30,15 +31,27 @@ export default function Page() {
     return () => {
       // cleanup
     }
-
+    
   }, [currentPage , page]);
   
+  // when the book is not found, redirect to the home page
   if (!book) {
+    router.push("/");
     return null;
   }
+
   return (
     <div>
-      <Sidebar book={book} page={page} setCurrentPage={setCurrentPage} currentPage={currentPage} />
+      <Drawer Drawer={isDrawerOpen} SetDrawer={setIsDrawerOpen} >
+      <PDFJS
+              book={book}
+              page={currentPage}
+              isSidebar={isDrawerOpen}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+            />
+            <button className="btn btn-link bg-red z-50 absolute top-5 right-5" onClick={() => router.push("/")}  >Home</button>
+        </Drawer>
     </div>
   );
 }

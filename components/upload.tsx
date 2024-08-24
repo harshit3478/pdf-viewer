@@ -6,10 +6,15 @@ import { MdCloudUpload } from "react-icons/md";
 import { AiTwotoneCloseCircle } from "react-icons/ai"
 import { useBookStore } from "@/store/book";
 import { useRouter } from "next/navigation";
+import Loading from "./loading";
+import Toast from "./toast";
 
 export default function Upload() {
   const { handleSubmit, register } = useForm();
   const [isFiles, setIsFiles] = React.useState<FileList | null>(null);
+  const [loading , setLoading] = React.useState(false);
+  const [showSuccessToast , setShowSuccessToast] = React.useState(false);
+  const [showErrorToast , setShowErrorToast] = React.useState(false);
   const books = useBookStore((state: any) => state.books);
   const addBook = useBookStore((state: any) => state.addBook);
 
@@ -19,6 +24,7 @@ export default function Upload() {
   }, [books]);
 
   async function onSubmit() {
+    setLoading(true);
     if (!isFiles) return;
     
     const formData = new FormData();
@@ -39,11 +45,20 @@ export default function Upload() {
       result.uploadedFiles.forEach((file: any) => {
         addBook({title : file.fileName.split('-')[1] ,path : file.fileUrl , lastPageVisited : 1 , id : file.fileName.split('-')[0] });
       });
-      alert("File uploaded successfully");
+      // alert("File uploaded successfully");
+      setShowSuccessToast(true);
+      setTimeout(() => {
+      setShowSuccessToast(false);
+      }, 5000);
       setIsFiles(null);
     } else {
-      alert("Error uploading file");
+      // alert("Error uploading file");
+      setShowErrorToast(true);
+      setTimeout(() => {
+      setShowErrorToast(false);
+      }, 5000);
     }
+    setLoading(false);
   }
 
   return (
@@ -91,41 +106,14 @@ export default function Upload() {
           Submit
         </button>
       </form>
+    {loading && 
+      <Loading text="Uploading files" />
+    }
+    {showSuccessToast && 
+    <Toast text="Files uploaded successfully" />}
+    {showErrorToast && 
+    <Toast text="Error uploading files" />}
     </div>
   );
 }
 
-{
-  /* {isFiles && (
-  <div>
-    {Array.from(isFiles).map((file) => (
-      <div className="modal modal-open" role="dialog" key={file.name}>
-        <div className="modal-box relative rounded-md bg-white w-[300] h-[200] py-8 px-10 text-black gap-5 flex flex-col items-center justify-center">
-          <button
-            className="modal-close absolute top-2 right-4 scale-150"
-            onClick={(e) => console.log("hello ")}
-          >
-            X
-          </button>
-          <div className="modal-action">
-            <label htmlFor="my_modal_6" className="btn">
-              Close!
-            </label>
-          </div>
-          <p>{file.name}</p>
-          <p>{file.size / 1000} KB</p>
-          <label className="input input-bordered flex items-center gap-5  bg-white border-slate-500 focus-within:border focus-within:border-slate-700">
-            Set Title
-            <input
-              type="text"
-              className="grow border-l border-black pl-2 "
-              placeholder="New Title"
-            />
-          </label>
-          <button className="btn btn-outline bg-white">Save Title</button>
-        </div>
-      </div>
-    ))}
-  </div>
-)} */
-}

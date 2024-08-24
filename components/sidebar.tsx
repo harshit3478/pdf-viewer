@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ViewPdf from "./ViewPdf";
+import ViewPdf from "./viewPdf";
 
 import { useBookStore } from "@/store/book";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";

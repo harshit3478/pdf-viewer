@@ -5,6 +5,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import Loading from "./loading";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -93,7 +94,7 @@ export default function PDFJS({ book, isSidebar = true, page , setCurrentPage , 
   return (
     <>
       <div
-        className={`flex-1 justify-center items-center ${
+        className={`flex-1 flex justify-center items-center ${
           isSidebar ? "w-[80vw]" : "w-[95vw]"
         } bg-transparent h-screen absolute right-0 overflow-auto`}
       >
@@ -104,23 +105,18 @@ export default function PDFJS({ book, isSidebar = true, page , setCurrentPage , 
         >
           <Page
             key={`page_${currentPage}`}
-            className="pdf-page relative mx-20 "
+            className="pdf-page relative mx-20 -z-10 "
             pageNumber={currentPage}
-            noData={
-              <div className="modal modal-open flex items-center justify-center ">
-                <div className="modal-overlay bg-slate-300"></div>
-                <div className="bg-slate-600 p-2 rounded-sm flex items-center justify-center">
-                  <h1 className="text-3xl font-bold p-3 rounded-md ">No page Specified!!</h1>
-                </div>
-              </div>
-            }
+            // noData={
+            //   <div className="modal modal-open flex items-center justify-center ">
+            //     <div className="modal-overlay bg-slate-300"></div>
+            //     <div className="bg-slate-600 p-2 rounded-sm flex items-center justify-center">
+            //       <h1 className="text-3xl font-bold p-3 rounded-md ">No page Specified!!</h1>
+            //     </div>
+            //   </div>
+            // }
             loading={
-              <div className="modal modal-open flex items-center justify-center ">
-                <div className="modal-overlay bg-slate-300"></div>
-                <div className="bg-slate-600 p-2 rounded-sm flex items-center justify-center">
-                  <span className="loading loading-infinity loading-lg"></span>
-                </div>
-              </div>
+             <Loading text="loading " />
             }
             onLoad={() => setLoading(true)}
             width={800}
@@ -151,16 +147,7 @@ export default function PDFJS({ book, isSidebar = true, page , setCurrentPage , 
         </div>
       </div>
       {loading && (
-        <>
-          <div className="modal modal-open flex items-center justify-center ">
-            <div className="modal-overlay bg-slate-300">
-              {/* <h1>Hello world</h1> */}
-            </div>
-            <div className="bg-slate-600 p-2 rounded-sm flex items-center justify-center">
-              <span className="loading loading-infinity loading-lg"></span>
-            </div>
-          </div>
-        </>
+        <Loading text="Loading page" />
       )}
     </>
   );
