@@ -175,7 +175,7 @@ export default function PDFJS({ book, isSidebar = true, page , setCurrentPage , 
       <div className="absolute bottom-5 rounded-md left-20 bg-slate-800 text-slate-200 p-2 text-center">
         <div>
           Page 
-          <input type='number' className="w-12 py-0.5 pl-4  input mx-3  border-solid border-1 border-slate-400"   value={currentPage} onChange={(e) => handlePageChange(e.target.valueAsNumber)}/> of {numPages}
+          <input type='number' className="min-w-16 max-w-20 w-fit py-0.5 pl-5  input mx-3  border-solid border-1 border-slate-400"   value={currentPage} onChange={(e) => handlePageChange(e.target.valueAsNumber)}/> of {numPages}
         </div>
       </div>
       {loading && (
