@@ -78,6 +78,33 @@ export default function PDFJS({ book, isSidebar = true, page , setCurrentPage , 
   //   };
   // }, [updateCurrentPage]);
 
+  // detect right and left keys from hardware keyboard of device
+  // avoid default behavior of browser
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        console.log("Arrowleft pressed")
+        if (currentPage > 1) {
+          setCurrentPage(currentPage - 1);
+        }
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        console.log("ArrowRight pressed")
+        if (currentPage < numPages) {
+          setCurrentPage(currentPage + 1);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [currentPage, numPages, setCurrentPage]);
+
+  
+  
   function IncrementPage() {
     if(currentPage === numPages) return;
 
@@ -104,11 +131,13 @@ export default function PDFJS({ book, isSidebar = true, page , setCurrentPage , 
           file={book.path}
           onLoadSuccess={onDocumentLoadSuccess}
           className={"h-screen overflow-y-auto flex justify-center  flex-1 "}
+          
         >
           <Page
             key={`page_${currentPage}`}
             className="pdf-page relative mx-20 z-0 "
             pageNumber={currentPage}
+            renderTextLayer={true}
             // noData={
             //   <div className="modal modal-open flex items-center justify-center ">
             //     <div className="modal-overlay bg-slate-300"></div>
@@ -122,6 +151,7 @@ export default function PDFJS({ book, isSidebar = true, page , setCurrentPage , 
             }
             onLoad={() => setLoading(true)}
             width={800}
+            
             height={800}
             onRenderSuccess={() => setLoading(false)}
           >
