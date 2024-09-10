@@ -1,0 +1,37 @@
+name: Next.js CI/CD
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build
+      run: npm run build
+      
+    - name: Set up environment
+      run: |
+        touch .env
+        echo "${{ secrets.PROD_ENV_FILE }}" > .env
+        
+    - name: Start/Restart PM2 process
+      run: |
+        pm2 describe nextjs-app > /dev/null
+        if [ $? -eq 0 ]; then
+          pm2 restart nextjs-app
+        else
+          pm2 start npm --name "nextjs-app" -- start
+        fi
